@@ -2,6 +2,8 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/75256f36faba9b1f2587/maintainability)](https://codeclimate.com/github/elvolt/frontend-project-lvl2/maintainability)
 
+[![Actions Status](https://github.com/elvolt/frontend-project-lvl2/workflows/Node%20CI/badge.svg)](https://github.com/elvolt/frontend-project-lvl2/actions)
+
 Проект выполнен в рамках обучения по 
 [профессии "Фронтенд JavaScript" в школе Хекслет](https://ru.hexlet.io/professions/frontend).
 
