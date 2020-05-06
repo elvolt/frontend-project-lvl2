@@ -2,7 +2,7 @@
   "name": "gendiff",
   "version": "0.1.0",
   "description": "frontend project lvl2",
-  "main": "src/index.js",
+  "main": "src/getDiff.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,7 +26,8 @@
     "gendiff": "bin/gendiff.js"
   },
   "dependencies": {
-    "commander": "^5.1.0"
+    "commander": "^5.1.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
