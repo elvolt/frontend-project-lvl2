@@ -12,3 +12,6 @@
 Возможности утилиты:
 * Поддержка разных форматов
 * Генерация отчета в виде plain text, pretty и json
+
+## Пример работы
+[![asciicast](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088.svg)](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088)
