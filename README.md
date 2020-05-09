@@ -16,6 +16,8 @@
 * Генерация отчета в виде plain text, pretty и json
 
 ## Пример работы
-[![asciicast](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088.svg)](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088)
+[![asciicast](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088.svg)](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088?speed=2)
 
-[![asciicast](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D.svg)](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D)
+[![asciicast](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D.svg)](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D?speed=2)
+
+[![asciicast](https://asciinema.org/a/Uo0lVRMdNaYD6ed8enYyLhKzR.svg)](https://asciinema.org/a/Uo0lVRMdNaYD6ed8enYyLhKzR?speed=2)
