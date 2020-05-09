@@ -1,6 +1,6 @@
 {
   "name": "gendiff",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "frontend project lvl2",
   "main": "src/getDiff.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "@jest/globals": "^26.0.1",
     "commander": "^5.1.0",
+    "js-yaml": "^3.13.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

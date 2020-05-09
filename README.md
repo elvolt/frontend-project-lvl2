@@ -17,3 +17,5 @@
 
 ## Пример работы
 [![asciicast](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088.svg)](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088)
+
+[![asciicast](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D.svg)](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D)
