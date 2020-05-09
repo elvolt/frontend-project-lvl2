@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import process from 'process';
 import yaml from 'js-yaml';
+import ini from 'ini';
 
 const getAbsolutePath = (relativePath) => path.resolve(process.cwd(), relativePath);
 
@@ -12,6 +13,10 @@ export default (filePath) => {
 
   if (format === '.yml') {
     return yaml.safeLoad(data);
+  }
+
+  if (format === '.ini') {
+    return ini.parse(data);
   }
 
   return JSON.parse(data);
