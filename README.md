@@ -2,6 +2,8 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/75256f36faba9b1f2587/maintainability)](https://codeclimate.com/github/elvolt/frontend-project-lvl2/maintainability)
 
+[![Test Coverage](https://api.codeclimate.com/v1/badges/75256f36faba9b1f2587/test_coverage)](https://codeclimate.com/github/elvolt/frontend-project-lvl2/test_coverage)
+
 [![Actions Status](https://github.com/elvolt/frontend-project-lvl2/workflows/Node%20CI/badge.svg)](https://github.com/elvolt/frontend-project-lvl2/actions)
 
 Проект выполнен в рамках обучения по 
