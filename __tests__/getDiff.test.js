@@ -6,11 +6,18 @@ import getDiff from '../src/getDiff.js';
 const getFixtureAbsolutePath = (filename) => path.join(path.resolve(), '__fixtures__', filename);
 const getFixtureRelativePath = (filename) => path.join('__fixtures__', filename);
 
-const beforeAbsolutePath = getFixtureAbsolutePath('before.json');
-const afterRelativePath = getFixtureRelativePath('after.json');
-
 const result = fs.readFileSync(`${getFixtureAbsolutePath('result.txt')}`, 'utf-8');
 
-test('getDiff', () => {
+test('test getDiff with JSON', () => {
+  const beforeAbsolutePath = getFixtureAbsolutePath('before.json');
+  const afterRelativePath = getFixtureRelativePath('after.json');
+
+  expect(getDiff(beforeAbsolutePath, afterRelativePath)).toBe(result);
+});
+
+test('test getDiff with YML', () => {
+  const beforeAbsolutePath = getFixtureAbsolutePath('before.yml');
+  const afterRelativePath = getFixtureRelativePath('after.yml');
+
   expect(getDiff(beforeAbsolutePath, afterRelativePath)).toBe(result);
 });

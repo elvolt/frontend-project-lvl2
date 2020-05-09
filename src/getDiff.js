@@ -1,15 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import process from 'process';
 import lodash from 'lodash';
+import parse from './parsers.js';
 
 const { has } = lodash;
 
-const getAbsolutePath = (relativePath) => path.resolve(process.cwd(), relativePath);
-
 const render = (obj) => {
   const keys = Object.keys(obj);
-  const a = keys.reduce((acc, key) => {
+  const differences = keys.reduce((acc, key) => {
     const [feature, ...value] = obj[key];
     switch (feature) {
       case 'added':
@@ -32,41 +28,35 @@ const render = (obj) => {
     return acc;
   }, []);
 
-  return `{\n  ${a.join('\n  ')};\n}`;
+  return `{\n  ${differences.join('\n  ')};\n}`;
 };
 
-export default (filepath1, filepath2) => {
-  const absoluteFilepath1 = filepath1.startsWith('/') ? filepath1 : getAbsolutePath(filepath1);
-  const absoluteFilepath2 = filepath2.startsWith('/') ? filepath2 : getAbsolutePath(filepath2);
+export default (filePath1, filePath2) => {
+  const file1Parsed = parse(filePath1);
+  const file2Parsed = parse(filePath2);
 
-  const file1Content = fs.readFileSync(absoluteFilepath1, 'utf8');
-  const file2Content = fs.readFileSync(absoluteFilepath2, 'utf8');
-
-  const file1JSON = JSON.parse(file1Content);
-  const file2JSON = JSON.parse(file2Content);
-
-  const file1Keys = Object.keys(file1JSON);
-  const file2Keys = Object.keys(file2JSON);
+  const file1Keys = Object.keys(file1Parsed);
+  const file2Keys = Object.keys(file2Parsed);
   const filesKeys = [...new Set([...file1Keys, ...file2Keys])];
 
   const difference = filesKeys.reduce((acc, key) => {
     // added
-    if (!has(file1JSON, key)) {
-      acc[key] = ['added', file2JSON[key]];
+    if (!has(file1Parsed, key)) {
+      acc[key] = ['added', file2Parsed[key]];
       return acc;
     }
     // deleted
-    if (!has(file2JSON, key)) {
-      acc[key] = ['deleted', file1JSON[key]];
+    if (!has(file2Parsed, key)) {
+      acc[key] = ['deleted', file1Parsed[key]];
       return acc;
     }
     // changed
-    if (file2JSON[key] !== file1JSON[key]) {
-      acc[key] = ['changed', file2JSON[key], file1JSON[key]];
+    if (file2Parsed[key] !== file1Parsed[key]) {
+      acc[key] = ['changed', file2Parsed[key], file1Parsed[key]];
       return acc;
     }
     // unchanged
-    acc[key] = ['unchanged', file2JSON[key]];
+    acc[key] = ['unchanged', file2Parsed[key]];
     return acc;
   }, {});
 
