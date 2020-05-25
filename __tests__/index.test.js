@@ -10,12 +10,23 @@ const getPaths = (fileName1, fileName2) => [
   getFixtureAbsolutePath(fileName1), getFixtureRelativePath(fileName2),
 ];
 
-const result = fs.readFileSync(`${getFixtureAbsolutePath('result.txt')}`, 'utf-8');
+const resultStylish = fs.readFileSync(`${getFixtureAbsolutePath('resultStylish.txt')}`, 'utf-8');
+const resultPlain = fs.readFileSync(`${getFixtureAbsolutePath('resultPlain.txt')}`, 'utf-8');
 
 test.each([
-  [...getPaths('before.json', 'after.json'), result],
-  [...getPaths('before.yml', 'after.yml'), result],
-  [...getPaths('before.ini', 'after.ini'), result],
-])('test genDiff', (filePath1, filePath2, expected) => {
-  expect(genDiff(filePath1, filePath2)).toBe(expected);
-});
+  [...getPaths('before.json', 'after.json'), resultStylish],
+  [...getPaths('before.yml', 'after.yml'), resultStylish],
+  [...getPaths('before.ini', 'after.ini'), resultStylish],
+])('test genDiff with stylish output',
+  (filePath1, filePath2, expected) => {
+    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expected);
+  });
+
+test.each([
+  [...getPaths('before.json', 'after.json'), resultPlain],
+  [...getPaths('before.yml', 'after.yml'), resultPlain],
+  [...getPaths('before.ini', 'after.ini'), resultPlain],
+])('test genDiff with plain output',
+  (filePath1, filePath2, expected) => {
+    expect(genDiff(filePath1, filePath2, 'plain')).toBe(expected);
+  });
