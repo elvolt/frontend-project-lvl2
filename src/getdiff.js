@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const genDiff = (before, after) => {
+const getDiff = (before, after) => {
   const beforeKeys = Object.keys(before);
   const afterKeys = Object.keys(after);
   const uniqKeys = [...new Set([...beforeKeys, ...afterKeys])].sort();
@@ -9,7 +9,7 @@ const genDiff = (before, after) => {
     if (_.isObject(before[key]) && _.isObject(after[key])) {
       acc.push({
         name: key,
-        children: genDiff(before[key], after[key]),
+        children: getDiff(before[key], after[key]),
       });
       return acc;
     }
@@ -55,4 +55,4 @@ const genDiff = (before, after) => {
   return differences;
 };
 
-export default genDiff;
+export default getDiff;

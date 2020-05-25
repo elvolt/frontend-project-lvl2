@@ -1,12 +1,12 @@
 import parse from './parsers.js';
-import genDiff from './gendiff.js';
-import stylish from './stylish.js';
+import getDiff from './getdiff.js';
+import render from './formatters/index.js';
 
-export default (filePath1, filePath2) => {
+export default (filePath1, filePath2, format) => {
   const file1Parsed = parse(filePath1);
   const file2Parsed = parse(filePath2);
 
-  const differences = genDiff(file1Parsed, file2Parsed);
+  const differences = getDiff(file1Parsed, file2Parsed);
 
-  return stylish(differences);
+  return render(format, differences);
 };
