@@ -11,7 +11,7 @@ export default (filePath) => {
   const format = path.extname(filePath);
   const data = fs.readFileSync(absoluteFilepath, 'utf8');
 
-  if (format === '.yml') {
+  if (format === '.yml' || format === '.yaml') {
     return yaml.safeLoad(data);
   }
 
@@ -19,5 +19,9 @@ export default (filePath) => {
     return ini.parse(data);
   }
 
-  return JSON.parse(data);
+  if (format === '.json') {
+    return JSON.parse(data);
+  }
+
+  throw new Error(`Error: format ${format} is not supported`);
 };
