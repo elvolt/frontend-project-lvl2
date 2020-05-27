@@ -12,14 +12,72 @@
 Проект представляет собой утилиту для поиска отличий в конфигурационных файлах.
 
 Возможности утилиты:
-* Поддержка разных форматов
-* Генерация отчета в виде plain text, pretty и json
+* Поддержка разных форматов (JSON, YML/YAML, INI)
 
-## Пример работы
-[![asciicast](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088.svg)](https://asciinema.org/a/yYaz9LrEzypzwROC7Q07Dq088?speed=2)
+* Генерация отчета в виде pretty (по умолч.), plain text и json
 
-[![asciicast](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D.svg)](https://asciinema.org/a/fkqbM1t2R8DpuZA3eqn2Qvg8D?speed=2)
+## Установка
+```bash
+$ sudo npm link
+```
 
-[![asciicast](https://asciinema.org/a/Uo0lVRMdNaYD6ed8enYyLhKzR.svg)](https://asciinema.org/a/Uo0lVRMdNaYD6ed8enYyLhKzR?speed=2)
+## Справка
+```bash
+$ gendiff --help
+```
 
-[![asciicast](https://asciinema.org/a/snE4D82qttjNid1yLSG7e2Mri.svg)](https://asciinema.org/a/snE4D82qttjNid1yLSG7e2Mri?speed=1.5)
+## Примеры работы
+### Поиск различий в конфигурационных файлах формата JSON и вывод результата в виде pretty
+```bash
+$ gendiff path/to/before.json path/to/after.json
+```
+или
+```bash
+$ gendiff --format stylish path/to/before.json path/to/after.json
+```
+
+Файл before.json:
+
+[![asciicast](https://asciinema.org/a/HccXFzCKZ9jACuX1KBCUoQoxw.svg)](https://asciinema.org/a/HccXFzCKZ9jACuX1KBCUoQoxw?speed=1.8)
+
+Файл after.json:
+
+[![asciicast](https://asciinema.org/a/6HalFUpxdzkMtgGnDg6ceiMBQ.svg)](https://asciinema.org/a/6HalFUpxdzkMtgGnDg6ceiMBQ?speed=1.8)  
+
+Отличия:
+
+[![asciicast](https://asciinema.org/a/6bWHwXSJDBQ3P66oaERe076Tg.svg)](https://asciinema.org/a/6bWHwXSJDBQ3P66oaERe076Tg?speed=1.8)  
+
+
+### Поиск различий в конфигурационных файлах формата YML/YAML и вывод результата в виде plain text
+```bash
+$ gendiff --format plain path/to/before.yml path/to/after.yml
+```
+Файл before.yml:
+
+[![asciicast](https://asciinema.org/a/1lcV6BK4s7LsMkNd0F7x1AbmO.svg)](https://asciinema.org/a/1lcV6BK4s7LsMkNd0F7x1AbmO?speed=1.8)
+
+Файл after.yml:
+
+[![asciicast](https://asciinema.org/a/fl8FJJanHuaENq9m6uYFNoyhj.svg)](https://asciinema.org/a/fl8FJJanHuaENq9m6uYFNoyhj?speed=1.8)
+
+Отличия:
+
+[![asciicast](https://asciinema.org/a/VcXbd9biokJw7hvgY0vVKSQ4a.svg)](https://asciinema.org/a/VcXbd9biokJw7hvgY0vVKSQ4a?speed=1.8)
+
+### Поиск различий в конфигурационных файлах формата INI и вывод результата в виде json
+```bash
+$ gendiff --format json path/to/before.ini path/to/after.ini
+```
+
+Файл before.ini:
+
+[![asciicast](https://asciinema.org/a/zO2u6npkCPieseffvJx8xZJ26.svg)](https://asciinema.org/a/zO2u6npkCPieseffvJx8xZJ26?speed=1.8)
+
+Файл after.ini:
+
+[![asciicast](https://asciinema.org/a/MHaWGKWMIQ7AhLa5yT94uwDcJ.svg)](https://asciinema.org/a/MHaWGKWMIQ7AhLa5yT94uwDcJ?speed=1.8)
+
+Отличия:
+
+[![asciicast](https://asciinema.org/a/ShivWSExNEjbuoO2JbNJaLd7i.svg)](https://asciinema.org/a/ShivWSExNEjbuoO2JbNJaLd7i?speed=1.8)

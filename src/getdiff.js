@@ -42,7 +42,6 @@ const getDiff = (before, after) => {
       });
       return acc;
     }
-
     // unchanged
     acc.push({
       name: key,
