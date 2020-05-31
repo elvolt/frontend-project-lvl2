@@ -38,7 +38,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.9.0",
     "jest": "^26.0.1",
-    "jest-cli": "^26.0.1"
+    "jest-cli": "^26.0.1",
+    "lodash.product": "^18.9.19"
   },
   "jest": {
     "testEnvironment": "node",
