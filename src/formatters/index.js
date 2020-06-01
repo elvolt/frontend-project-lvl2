@@ -2,7 +2,7 @@ import renderStylish from './stylish.js';
 import renderPlain from './plain.js';
 import renderJSON from './json.js';
 
-export default (format, data) => {
+export default (format) => (data) => {
   if (format === 'plain') {
     return renderPlain(data);
   }

@@ -23,5 +23,5 @@ export default (filePath1, filePath2, format) => {
 
   const differences = getDiff(file1Parsed, file2Parsed);
 
-  return render(format, differences);
+  return render(format)(differences);
 };
