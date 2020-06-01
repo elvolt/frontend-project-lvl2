@@ -1,55 +1,39 @@
 import _ from 'lodash';
 
+const buildDifferenceLeafNode = (name, value, status, oldValue) => (status === 'changed'
+  ? {
+    name, value, status, oldValue,
+  } : {
+    name, value, status,
+  }
+);
+
 const getDiff = (before, after) => {
-  const beforeKeys = Object.keys(before);
-  const afterKeys = Object.keys(after);
-  const uniqKeys = [...new Set([...beforeKeys, ...afterKeys])].sort();
+  const uniqKeysSorted = _.union(_.keys(before), _.keys(after)).sort();
 
-  const differences = uniqKeys.reduce((acc, key) => {
-    if (_.isObject(before[key]) && _.isObject(after[key])) {
-      acc.push({
-        name: key,
-        children: getDiff(before[key], after[key]),
-      });
-      return acc;
-    }
-
+  const differences = uniqKeysSorted.map((key) => {
     // added
     if (!_.has(before, key)) {
-      acc.push({
-        name: key,
-        value: _.cloneDeep(after[key]),
-        status: 'added',
-      });
-      return acc;
+      return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'added');
     }
     // deleted
     if (!_.has(after, key)) {
-      acc.push({
+      return buildDifferenceLeafNode(key, _.cloneDeep(before[key]), 'deleted');
+    }
+
+    if (_.isObject(before[key]) && _.isObject(after[key])) {
+      return {
         name: key,
-        value: _.cloneDeep(before[key]),
-        status: 'deleted',
-      });
-      return acc;
+        children: getDiff(before[key], after[key]),
+      };
     }
     // changed
     if (before[key] !== after[key]) {
-      acc.push({
-        name: key,
-        value: _.cloneDeep(after[key]),
-        oldValue: _.cloneDeep(before[key]),
-        status: 'changed',
-      });
-      return acc;
+      return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'changed', _.cloneDeep(before[key]));
     }
     // unchanged
-    acc.push({
-      name: key,
-      value: _.cloneDeep(after[key]),
-      status: 'unchanged',
-    });
-    return acc;
-  }, []);
+    return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'unchanged');
+  });
 
   return differences;
 };
