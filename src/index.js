@@ -5,12 +5,9 @@ import parse from './parsers.js';
 import getDiff from './getdiff.js';
 import render from './formatters/index.js';
 
-const getAbsoluteFilePath = (filePath) => (filePath.startsWith('/')
-  ? filePath : path.resolve(process.cwd(), filePath));
-
 export default (filePath1, filePath2, format) => {
-  const file1AbsolutePath = getAbsoluteFilePath(filePath1);
-  const file2AbsolutePath = getAbsoluteFilePath(filePath2);
+  const file1AbsolutePath = path.resolve(process.cwd(), filePath1);
+  const file2AbsolutePath = path.resolve(process.cwd(), filePath2);
 
   const file1Data = fs.readFileSync(file1AbsolutePath, 'utf8');
   const file2Data = fs.readFileSync(file2AbsolutePath, 'utf8');
