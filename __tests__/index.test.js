@@ -12,23 +12,33 @@ const getPaths = (fileName1, fileName2) => [
   getFixtureAbsolutePath(fileName1), getFixtureRelativePath(fileName2),
 ];
 
-const resultStylish = fs.readFileSync(`${getFixtureAbsolutePath('resultStylish.txt')}`, 'utf-8');
-const resultPlain = fs.readFileSync(`${getFixtureAbsolutePath('resultPlain.txt')}`, 'utf-8');
-const resultJSON = JSON.stringify(JSON.parse(fs.readFileSync(`${getFixtureAbsolutePath('resultJSON.json')}`)));
+let resultStylish;
+let resultPlain;
+let resultJSON;
+let inputFilesPaths;
 
-const fileTypes = ['yml', 'ini', 'json'];
-const resultsFormats = [['stylish', resultStylish], ['plain', resultPlain], ['json', resultJSON]];
-const inputFilesPaths = fileTypes.map((type) => getPaths(`before.${type}`, `after.${type}`));
+beforeAll(() => {
+  resultStylish = fs.readFileSync(`${getFixtureAbsolutePath('resultStylish.txt')}`, 'utf-8');
+  resultPlain = fs.readFileSync(`${getFixtureAbsolutePath('resultPlain.txt')}`, 'utf-8');
+  resultJSON = JSON.stringify(JSON.parse(fs.readFileSync(`${getFixtureAbsolutePath('resultJSON.json')}`)));
 
-test.each(
-  _.product(inputFilesPaths, resultsFormats),
-)('test genDiff',
-  ([filePath1, filePath2], [formatter, expected]) => {
+  const fileTypes = ['yml', 'ini', 'json'];
+  inputFilesPaths = fileTypes.map((type) => getPaths(`before.${type}`, `after.${type}`));
+});
+
+test('test genDiff', () => {
+  const resultsFormats = [['stylish', resultStylish], ['plain', resultPlain], ['json', resultJSON]];
+  const testData = _.product(inputFilesPaths, resultsFormats);
+
+  testData.forEach(([[filePath1, filePath2], [formatter, expected]]) => {
     expect(genDiff(filePath1, filePath2, formatter)).toBe(expected);
   });
+});
 
 test('test incorrect output format', () => {
-  expect(() => {
-    genDiff(...getPaths('before.json', 'after.json'), 'html');
-  }).toThrow('Error: format html is not supported');
+  inputFilesPaths.forEach((paths) => {
+    expect(() => {
+      genDiff(...paths, 'html');
+    }).toThrow('Error: format html is not supported');
+  });
 });
