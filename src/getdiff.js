@@ -1,12 +1,14 @@
 import _ from 'lodash';
 
-const buildDifferenceLeafNode = (name, value, status, oldValue) => (status === 'changed'
-  ? {
-    name, value, status, oldValue,
-  } : {
-    name, value, status,
+const mkAddedLeafNode = (name, value) => ({ name, type: 'added', value });
+const mkDeletedLeafNode = (name, value) => ({ name, type: 'deleted', value });
+const mkChangedLeafNode = (name, value, oldValue) => (
+  {
+    name, type: 'changed', value, oldValue,
   }
 );
+const mkUnchangedLeafNode = (name, value) => ({ name, type: 'unchanged', value });
+const mkWithNestedNode = (name, children = []) => ({ name, type: 'nested', children });
 
 const getDiff = (before, after) => {
   const uniqKeysSorted = _.union(_.keys(before), _.keys(after)).sort();
@@ -14,25 +16,22 @@ const getDiff = (before, after) => {
   const differences = uniqKeysSorted.map((key) => {
     // added
     if (!_.has(before, key)) {
-      return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'added');
+      return mkAddedLeafNode(key, after[key]);
     }
     // deleted
     if (!_.has(after, key)) {
-      return buildDifferenceLeafNode(key, _.cloneDeep(before[key]), 'deleted');
+      return mkDeletedLeafNode(key, before[key]);
     }
 
     if (_.isObject(before[key]) && _.isObject(after[key])) {
-      return {
-        name: key,
-        children: getDiff(before[key], after[key]),
-      };
+      return mkWithNestedNode(key, getDiff(before[key], after[key]));
     }
     // changed
     if (before[key] !== after[key]) {
-      return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'changed', _.cloneDeep(before[key]));
+      return mkChangedLeafNode(key, after[key], before[key]);
     }
     // unchanged
-    return buildDifferenceLeafNode(key, _.cloneDeep(after[key]), 'unchanged');
+    return mkUnchangedLeafNode(key, after[key]);
   });
 
   return differences;

@@ -1,38 +1,38 @@
 import _ from 'lodash';
 
-const STATUS_SIGNS = {
+const TYPED_SIGNS = {
   added: '+',
   deleted: '-',
+  nested: ' '.repeat(2),
+  unchanged: ' ',
 };
-
-const NO_STATUS = ' '.repeat(2);
 
 export default (ast) => {
   const iter = (node, depth) => {
-    const { name, status, children } = node;
-    const value = _.cloneDeep(node.value);
-    const oldValue = _.cloneDeep(node.oldValue);
-    const indent1 = ' '.repeat(2 + 4 * depth); // до ключа
-    const indent2 = ' '.repeat(indent1.length + 2); // до закрыв.фигурн.скобки
-    const indent3 = ' '.repeat(indent1.length + 4); // до ключа внутри объекта
-    const sign = STATUS_SIGNS[status] || ' ';
+    const {
+      name, type, value, oldValue, children,
+    } = node;
+    const indent1 = ' '.repeat(2 + 4 * depth); // to key
+    const indent2 = ' '.repeat(indent1.length + 2); // to closed brace
+    const indent3 = ' '.repeat(indent1.length + 4); // to key in object
+    const sign = TYPED_SIGNS[type];
 
-    if (children) {
+    if (type === 'nested') {
       const updatedChildren = children.map((child) => iter(child, depth + 1));
-      return `\n${indent1}${NO_STATUS}${name}: {${updatedChildren.join('')}\n${indent2}}`;
+      return `\n${indent1}${sign}${name}: {${updatedChildren.join('')}\n${indent2}}`;
     }
 
-    if (status === 'changed') {
+    if (type === 'changed') {
       return [
-        { ...node, value: oldValue, status: 'deleted' },
-        { ...node, status: 'added' },
+        { ...node, value: oldValue, type: 'deleted' },
+        { ...node, type: 'added' },
       ].map((obj) => iter(obj, depth))
         .join('');
     }
 
     if (_.isObject(value)) {
       const [[valueKey, valueValue]] = Object.entries(value);
-      return `\n${indent1}${sign} ${name}: {\n${indent3}${NO_STATUS}${valueKey}: ${valueValue}\n${indent2}}`;
+      return `\n${indent1}${sign} ${name}: {\n${indent3}  ${valueKey}: ${valueValue}\n${indent2}}`;
     }
 
     return `\n${indent1}${sign} ${name}: ${value}`;

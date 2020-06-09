@@ -19,22 +19,18 @@ const getValue = (value) => {
 
 export default (ast) => {
   const iter = (node) => {
-    const output = {};
-    const { name, status } = node;
-    const value = _.cloneDeep(node.value);
-    const oldValue = _.cloneDeep(node.oldValue);
-    const children = node.children || null;
+    const {
+      name, type, value, oldValue, children,
+    } = node;
+    const output = { type, name };
 
-    output.status = status;
-    output.parametr = name;
-
-    if (children) {
-      output.value = children.map((child) => iter(child));
+    if (type === 'nested') {
+      output.children = children.map((child) => iter(child));
     } else {
       output.value = getValue(value);
     }
 
-    if (status === 'changed') {
+    if (type === 'changed') {
       output.oldValue = getValue(oldValue);
     }
 

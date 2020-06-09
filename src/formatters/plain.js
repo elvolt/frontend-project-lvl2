@@ -15,28 +15,27 @@ const getValue = (value) => {
 
 export default (ast) => {
   const iter = (node, acc) => {
-    const { name, status } = node;
+    const { name, type, children } = node;
     const value = getValue(node.value);
     const oldValue = getValue(node.oldValue);
-    const children = node.children || null;
 
-    if (children) {
-      return children.filter((child) => child.status !== 'unchanged')
-        .map((child) => iter(child, `${acc}${name}.`)).join('\n');
-    }
-
-    switch (status) {
+    switch (type) {
+      case 'unchanged':
+        break;
       case 'deleted':
-        return `Property "${acc}${name}" was deleted`;
+        return `Property "${acc}${name}" was deleted\n`;
       case 'added':
-        return `Property "${acc}${name}" was added with value: ${value}`;
+        return `Property "${acc}${name}" was added with value: ${value}\n`;
       case 'changed':
-        return `Property "${acc}${name}" was changed from ${oldValue} to ${value}`;
+        return `Property "${acc}${name}" was changed from ${oldValue} to ${value}\n`;
+      case 'nested':
+        return children.map((child) => iter(child, `${acc}${name}.`)).join('');
       default:
-        throw new Error(`Unknown status: '${status}'!`);
+        throw new Error(`Unknown type: '${type}'!`);
     }
+
+    return '';
   };
 
-  return ast.filter((node) => node.status !== 'unchanged')
-    .map((node) => iter(node, '')).join('\n');
+  return ast.map((node) => iter(node, '')).join('').trim();
 };
