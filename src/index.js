@@ -12,8 +12,8 @@ export default (filePath1, filePath2, format) => {
   const file1Data = fs.readFileSync(file1AbsolutePath, 'utf8');
   const file2Data = fs.readFileSync(file2AbsolutePath, 'utf8');
 
-  const file1Extension = path.extname(file1AbsolutePath);
-  const file2Extension = path.extname(file2AbsolutePath);
+  const file1Extension = path.extname(file1AbsolutePath).slice(1);
+  const file2Extension = path.extname(file2AbsolutePath).slice(1);
 
   const file1Parsed = parse(file1Extension)(file1Data);
   const file2Parsed = parse(file2Extension)(file2Data);
