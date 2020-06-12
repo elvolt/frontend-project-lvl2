@@ -8,10 +8,6 @@ import genDiff from '../src/index.js';
 const getFixtureAbsolutePath = (fileName) => path.join(path.resolve(), '__fixtures__', fileName);
 const getFixtureRelativePath = (fileName) => path.join('__fixtures__', fileName);
 
-const getPaths = (fileName1, fileName2) => [
-  getFixtureAbsolutePath(fileName1), getFixtureRelativePath(fileName2),
-];
-
 let resultStylish;
 let resultPlain;
 let resultJSON;
@@ -23,7 +19,9 @@ beforeAll(() => {
   resultJSON = JSON.stringify(JSON.parse(fs.readFileSync(`${getFixtureAbsolutePath('resultJSON.json')}`)));
 
   const fileTypes = ['yml', 'ini', 'json'];
-  inputFilesPaths = fileTypes.map((type) => getPaths(`before.${type}`, `after.${type}`));
+  inputFilesPaths = fileTypes.map((type) => [
+    getFixtureAbsolutePath(`before.${type}`), getFixtureRelativePath(`after.${type}`),
+  ]);
 });
 
 test('test genDiff', () => {
