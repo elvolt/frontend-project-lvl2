@@ -5,11 +5,6 @@ const getValue = (value) => {
     return '[complex value]';
   }
 
-  // Fix converting numbers in ini-parser
-  if (String(Number(value)) === value) {
-    return JSON.stringify(Number(value));
-  }
-
   return JSON.stringify(value);
 };
 

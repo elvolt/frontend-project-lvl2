@@ -10,10 +10,6 @@ const getValue = (value) => {
     return valueCopy;
   }
 
-  if (String(Number(value)) === value) {
-    return Number(value);
-  }
-
   return value;
 };
 
