@@ -1,104 +1,158 @@
 [
   {
-    "type": "nested",
     "name": "common",
+    "type": "nested",
     "children": [
       {
-        "type": "added",
         "name": "follow",
-        "value": false
-      },
-      {
-        "type": "unchanged",
-        "name": "setting1",
-        "value": "Value 1"
-      },
-      {
-        "type": "deleted",
-        "name": "setting2",
-        "value": 200
-      },
-      {
-        "type": "changed",
-        "name": "setting3",
-        "value": {
-          "key": "value"
-        },
-        "oldValue": true
-      },
-      {
         "type": "added",
-        "name": "setting4",
-        "value": "blah blah"
-      },
-      {
-        "type": "added",
-        "name": "setting5",
         "value": {
-          "key5": "value5"
+          "type": "simple",
+          "value": false
         }
       },
       {
-        "type": "nested",
+        "name": "setting1",
+        "type": "unchanged",
+        "value": {
+          "type": "simple",
+          "value": "Value 1"
+        }
+      },
+      {
+        "name": "setting2",
+        "type": "deleted",
+        "value": {
+          "type": "simple",
+          "value": 200
+        }
+      },
+      {
+        "name": "setting3",
+        "type": "changed",
+        "value": {
+          "type": "complicated",
+          "value": {
+            "key": "value"
+          }
+        },
+        "oldValue": {
+          "type": "simple",
+          "value": true
+        }
+      },
+      {
+        "name": "setting4",
+        "type": "added",
+        "value": {
+          "type": "simple",
+          "value": "blah blah"
+        }
+      },
+      {
+        "name": "setting5",
+        "type": "added",
+        "value": {
+          "type": "complicated",
+          "value": {
+            "key5": "value5"
+          }
+        }
+      },
+      {
         "name": "setting6",
+        "type": "nested",
         "children": [
           {
-            "type": "unchanged",
             "name": "key",
-            "value": "value"
+            "type": "unchanged",
+            "value": {
+              "type": "simple",
+              "value": "value"
+            }
           },
           {
-            "type": "added",
             "name": "ops",
-            "value": "vops"
+            "type": "added",
+            "value": {
+              "type": "simple",
+              "value": "vops"
+            }
           }
         ]
       },
       {
-        "type": "changed",
         "name": "timeout",
-        "value": 50,
-        "oldValue": 30
-      }
-    ]
-  },
-  {
-    "type": "nested",
-    "name": "group1",
-    "children": [
-      {
         "type": "changed",
-        "name": "baz",
-        "value": "bars",
-        "oldValue": "bas"
-      },
-      {
-        "type": "unchanged",
-        "name": "foo",
-        "value": "bar"
-      },
-      {
-        "type": "changed",
-        "name": "nest",
-        "value": "str",
+        "value": {
+          "type": "simple",
+          "value": 50
+        },
         "oldValue": {
-          "key": "value"
+          "type": "simple",
+          "value": 30
         }
       }
     ]
   },
   {
-    "type": "deleted",
+    "name": "group1",
+    "type": "nested",
+    "children": [
+      {
+        "name": "baz",
+        "type": "changed",
+        "value": {
+          "type": "simple",
+          "value": "bars"
+        },
+        "oldValue": {
+          "type": "simple",
+          "value": "bas"
+        }
+      },
+      {
+        "name": "foo",
+        "type": "unchanged",
+        "value": {
+          "type": "simple",
+          "value": "bar"
+        }
+      },
+      {
+        "name": "nest",
+        "type": "changed",
+        "value": {
+          "type": "simple",
+          "value": "str"
+        },
+        "oldValue": {
+          "type": "complicated",
+          "value": {
+            "key": "value"
+          }
+        }
+      }
+    ]
+  },
+  {
     "name": "group2",
+    "type": "deleted",
     "value": {
-      "abc": 12345
+      "type": "complicated",
+      "value": {
+        "abc": 12345
+      }
     }
   },
   {
-    "type": "added",
     "name": "group3",
+    "type": "added",
     "value": {
-      "fee": 100500
+      "type": "complicated",
+      "value": {
+        "fee": 100500
+      }
     }
   }
 ]

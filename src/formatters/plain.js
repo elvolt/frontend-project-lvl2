@@ -1,36 +1,26 @@
-import _ from 'lodash';
-
-const getValue = (value) => {
-  if (_.isObject(value)) {
-    return '[complex value]';
-  }
-
-  return JSON.stringify(value);
-};
+const renderValue = (value) => (value.type === 'simple' ? JSON.stringify(value.value) : '[complex value]');
 
 export default (ast) => {
-  const iter = (node, acc) => {
-    const { name, type, children } = node;
-    const value = getValue(node.value);
-    const oldValue = getValue(node.oldValue);
+  const iter = (tree, acc) => tree.filter((node) => node.type !== 'unchanged')
+    .map((node) => {
+      const {
+        name, type, value, oldValue,
+      } = node;
 
-    switch (type) {
-      case 'unchanged':
-        break;
-      case 'deleted':
-        return `Property "${acc}${name}" was deleted\n`;
-      case 'added':
-        return `Property "${acc}${name}" was added with value: ${value}\n`;
-      case 'changed':
-        return `Property "${acc}${name}" was changed from ${oldValue} to ${value}\n`;
-      case 'nested':
-        return children.map((child) => iter(child, `${acc}${name}.`)).join('');
-      default:
-        throw new Error(`Unknown type: '${type}'!`);
-    }
+      switch (type) {
+        case 'deleted':
+          return `Property "${acc}${name}" was deleted`;
+        case 'added':
+          return `Property "${acc}${name}" was added with value: ${renderValue(value)}`;
+        case 'changed':
+          return `Property "${acc}${name}" was changed from ${renderValue(oldValue)} to ${renderValue(value)}`;
+        case 'nested':
+          return iter(node.children, `${acc}${name}.`);
+        default:
+          throw new Error(`Unknown type: '${type}'!`);
+      }
+    })
+    .join('\n');
 
-    return '';
-  };
-
-  return ast.map((node) => iter(node, '')).join('').trim();
+  return iter(ast, '');
 };

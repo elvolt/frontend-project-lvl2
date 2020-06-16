@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const TYPED_SIGNS = {
   added: '+',
   deleted: '-',
@@ -8,35 +6,38 @@ const TYPED_SIGNS = {
 };
 
 export default (ast) => {
-  const iter = (node, depth) => {
+  const iter = (tree, depth) => tree.map((node) => {
     const {
-      name, type, value, oldValue, children,
+      name, type, value, oldValue,
     } = node;
     const indent1 = ' '.repeat(2 + 4 * depth); // to key
     const indent2 = ' '.repeat(indent1.length + 2); // to closed brace
     const indent3 = ' '.repeat(indent1.length + 4); // to key in object
     const sign = TYPED_SIGNS[type];
 
+    const renderValue = (val) => {
+      if (val.type === 'complicated') {
+        const [[valueKey, valueValue]] = Object.entries(val.value);
+        return `{\n${indent3}  ${valueKey}: ${valueValue}\n${indent2}}`;
+      }
+
+      return val.value;
+    };
+
     if (type === 'nested') {
-      const updatedChildren = children.map((child) => iter(child, depth + 1));
-      return `\n${indent1}${sign}${name}: {${updatedChildren.join('')}\n${indent2}}`;
+      return `${indent1}${sign}${name}: {\n${iter(node.children, depth + 1)}\n${indent2}}`;
     }
 
     if (type === 'changed') {
-      return [
+      return iter([
         { ...node, value: oldValue, type: 'deleted' },
         { ...node, type: 'added' },
-      ].map((obj) => iter(obj, depth))
-        .join('');
+      ], depth);
     }
 
-    if (_.isObject(value)) {
-      const [[valueKey, valueValue]] = Object.entries(value);
-      return `\n${indent1}${sign} ${name}: {\n${indent3}  ${valueKey}: ${valueValue}\n${indent2}}`;
-    }
+    return `${indent1}${sign} ${name}: ${renderValue(value)}`;
+  })
+    .join('\n');
 
-    return `\n${indent1}${sign} ${name}: ${value}`;
-  };
-
-  return `{${ast.map((node) => iter(node, 0)).join('')}\n}`;
+  return `{\n${iter(ast, 0)}\n}`;
 };
