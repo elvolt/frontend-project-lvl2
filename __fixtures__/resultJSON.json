@@ -6,57 +6,36 @@
       {
         "name": "follow",
         "type": "added",
-        "value": {
-          "type": "simple",
-          "value": false
-        }
+        "value": false
       },
       {
         "name": "setting1",
         "type": "unchanged",
-        "value": {
-          "type": "simple",
-          "value": "Value 1"
-        }
+        "value": "Value 1"
       },
       {
         "name": "setting2",
         "type": "deleted",
-        "value": {
-          "type": "simple",
-          "value": 200
-        }
+        "value": 200
       },
       {
         "name": "setting3",
         "type": "changed",
-        "value": {
-          "type": "complicated",
-          "value": {
-            "key": "value"
-          }
+        "valueAfter": {
+          "key": "value"
         },
-        "oldValue": {
-          "type": "simple",
-          "value": true
-        }
+        "valueBefore": true
       },
       {
         "name": "setting4",
         "type": "added",
-        "value": {
-          "type": "simple",
-          "value": "blah blah"
-        }
+        "value": "blah blah"
       },
       {
         "name": "setting5",
         "type": "added",
         "value": {
-          "type": "complicated",
-          "value": {
-            "key5": "value5"
-          }
+          "key5": "value5"
         }
       },
       {
@@ -66,32 +45,20 @@
           {
             "name": "key",
             "type": "unchanged",
-            "value": {
-              "type": "simple",
-              "value": "value"
-            }
+            "value": "value"
           },
           {
             "name": "ops",
             "type": "added",
-            "value": {
-              "type": "simple",
-              "value": "vops"
-            }
+            "value": "vops"
           }
         ]
       },
       {
         "name": "timeout",
         "type": "changed",
-        "value": {
-          "type": "simple",
-          "value": 50
-        },
-        "oldValue": {
-          "type": "simple",
-          "value": 30
-        }
+        "valueAfter": 50,
+        "valueBefore": 30
       }
     ]
   },
@@ -102,35 +69,20 @@
       {
         "name": "baz",
         "type": "changed",
-        "value": {
-          "type": "simple",
-          "value": "bars"
-        },
-        "oldValue": {
-          "type": "simple",
-          "value": "bas"
-        }
+        "valueAfter": "bars",
+        "valueBefore": "bas"
       },
       {
         "name": "foo",
         "type": "unchanged",
-        "value": {
-          "type": "simple",
-          "value": "bar"
-        }
+        "value": "bar"
       },
       {
         "name": "nest",
         "type": "changed",
-        "value": {
-          "type": "simple",
-          "value": "str"
-        },
-        "oldValue": {
-          "type": "complicated",
-          "value": {
-            "key": "value"
-          }
+        "valueAfter": "str",
+        "valueBefore": {
+          "key": "value"
         }
       }
     ]
@@ -139,20 +91,14 @@
     "name": "group2",
     "type": "deleted",
     "value": {
-      "type": "complicated",
-      "value": {
-        "abc": 12345
-      }
+      "abc": 12345
     }
   },
   {
     "name": "group3",
     "type": "added",
     "value": {
-      "type": "complicated",
-      "value": {
-        "fee": 100500
-      }
+      "fee": 100500
     }
   }
 ]

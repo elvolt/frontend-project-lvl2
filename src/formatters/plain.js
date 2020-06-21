@@ -1,10 +1,12 @@
-const renderValue = (value) => (value.type === 'simple' ? JSON.stringify(value.value) : '[complex value]');
+import _ from 'lodash';
+
+const renderValue = (value) => (_.isObject(value) ? '[complex value]' : JSON.stringify(value));
 
 export default (ast) => {
   const iter = (tree, acc) => tree.filter((node) => node.type !== 'unchanged')
     .map((node) => {
       const {
-        name, type, value, oldValue,
+        name, type, value, valueBefore = null, valueAfter = null,
       } = node;
 
       switch (type) {
@@ -13,7 +15,7 @@ export default (ast) => {
         case 'added':
           return `Property "${acc}${name}" was added with value: ${renderValue(value)}`;
         case 'changed':
-          return `Property "${acc}${name}" was changed from ${renderValue(oldValue)} to ${renderValue(value)}`;
+          return `Property "${acc}${name}" was changed from ${renderValue(valueBefore)} to ${renderValue(valueAfter)}`;
         case 'nested':
           return iter(node.children, `${acc}${name}.`);
         default:

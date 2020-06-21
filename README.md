@@ -80,4 +80,4 @@ $ gendiff --format json path/to/before.ini path/to/after.ini
 
 Отличия:
 
-[![asciicast](https://asciinema.org/a/3gj6CMaemTYWsXDEuBOWB2pRD.svg)](https://asciinema.org/a/3gj6CMaemTYWsXDEuBOWB2pRD?speed=1.8)
+[![asciicast](https://asciinema.org/a/I1T7ChxVRKQJo0madMKCR3qJC.svg)](https://asciinema.org/a/I1T7ChxVRKQJo0madMKCR3qJC?speed=1.8)
